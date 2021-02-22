@@ -1,0 +1,36 @@
+.row {
+    display: none;
+    margin: auto;
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    width: 520px;
+    height: 520px;
+    grid-gap: 0px;
+}
+
+.position1 {
+    width: 65px;
+    height: 65px;
+    background-color: #f4ffcb;
+    border-radius: 6px;
+}
+
+.position {
+    width: 65px;
+    height: 65px;
+    background-color: #ff0000;
+    border-radius: 6px;
+}
+
+.secret {
+    display: none;
+}
+
+img {
+    height: 57px;
+    width: 57px;
+    margin: 4px;
+}
+
+button {
+    width: 100px
+}
