@@ -455,13 +455,13 @@ document.addEventListener("dragstart", function(ev) {
     from = ev.path[1].id
 })
 
+var colourNotAllowedToMove = "black"
+
 document.addEventListener("drop", function(ev) {
     ev.preventDefault()
     var initialID = ev.dataTransfer.getData("pieceName")
     var initialPos = ev.dataTransfer.getData("position")
     var targetID = ev.target.id
-    var moveTo = occupied[targetID]
-    var moveFrom = occupied[from]
     var colour = ""
     console.log(targetID, initialPos)
     if(initialID.charAt(1) === "b"){
@@ -470,20 +470,29 @@ document.addEventListener("drop", function(ev) {
         colour = "white"
     }
     const possibleMoves = canBeMoved(undefined, [initialID, initialPos])
-    console.log(possibleMoves[1])
     if(possibleMoves[0].length === 0 && possibleMoves[1].length === 0){
         console.log("illegal move")
     }else{
         if(possibleMoves[0].includes(targetID)){
-            occupied[targetID].colour = colour
-            occupied[initialPos].colour = "none"
-            ev.target.appendChild(document.getElementById(initialID));
+            if(colour === colourNotAllowedToMove){
+                console.log("illegal move")
+            }else{
+                colourNotAllowedToMove = colour
+                occupied[targetID].colour = colour
+                occupied[initialPos].colour = "none"
+                ev.target.appendChild(document.getElementById(initialID));
+            }
         }else if(possibleMoves[1].length != 0){
             if(possibleMoves[1].includes(ev.path[1].id)){
-                occupied[ev.path[1].id].colour = colour
-                occupied[initialPos].colour = "none"
-                document.getElementById(targetID).remove()
-                document.getElementById(ev.path[1].id).appendChild(document.getElementById(initialID));
+                if(colour === colourNotAllowedToMove){
+                    console.log("illegal move")
+                }else{
+                    colourNotAllowedToMove = colour
+                    occupied[ev.path[1].id].colour = colour
+                    occupied[initialPos].colour = "none"
+                    document.getElementById(targetID).remove()
+                    document.getElementById(ev.path[1].id).appendChild(document.getElementById(initialID));
+                }
             }
         }else{
             console.log("illegal move")
